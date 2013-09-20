@@ -14,9 +14,9 @@ int main(){
   b.ix = 0; b.iy = 0;
 
   // test sources and angles
-  const int N = 5;
-  int xV[N] = {6,7,8,1,6};
-  int yV[N] = {12,13,10,2,12};
+  const int N = 6;
+  double xV[N] = {6,7,8,1,6};
+  double yV[N] = {12,13,10,2,12};
   double aV[N] = {1.2,0.8,-0.9,0,1.6};
 
   double* xHit; 
@@ -36,8 +36,9 @@ int main(){
 
 	}
 
-    catch(domain_error& e)
+    catch(domain_error& e){
       cout << e.what() << endl;
+    }
 
   }
 
