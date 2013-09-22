@@ -7,7 +7,7 @@ objects = $(patsubst %.cc, %.o,$(srcs))
 PROJECT= Raytracing
 
 LINKFLAGS=
-LIBS=
+LIBS= -lboost_system -lboost_timer
 CFLAGS= -g
 
 .PHONY: all
