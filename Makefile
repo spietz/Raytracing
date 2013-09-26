@@ -2,7 +2,7 @@
 
 CC= g++
 
-srcs = test.cc raybox.cc
+srcs = test_raytracer.cc raytracer.cc raybox.cc mymatrix.cc
 objects = $(patsubst %.cc, %.o,$(srcs))
 PROJECT= Raytracing
 

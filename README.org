@@ -1,0 +1,11 @@
+* raytracer.h
+** raytracer
+*** INPUT
+    xs,ys: coordinates of ray source
+    xr,yr: coordinates of ray receiver
+    x0,y0: lower left corner of domain
+    x1,y1: upper right corner of domain
+    Nx,Ny: number of cells
+*** OUTPUT
+    L: Nx,Ny-sized matrix with ray travel distances in each cell 
+   
