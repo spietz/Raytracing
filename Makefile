@@ -8,11 +8,11 @@ PROJECT= Raytracing
 
 LINKFLAGS=
 LIBS= -lboost_system -lboost_timer
-CFLAGS= -g
+CFLAGS=  -Wno-deprecated -g -O2
 
 .PHONY: all
 all:${PROJECT}
-	$(shell ctags -Re)
+#	$(shell ctags -Re)
 
 # regel for exe-filen, dvs link filer
 ${PROJECT}: $(objects)

@@ -9,6 +9,6 @@ struct box{
   double x, y;  // source of ray
 };
 
-double* tracebox(box &box);
+double tracebox(box &b); // return lenght of ray and indent relevant members of box b
 
 #endif

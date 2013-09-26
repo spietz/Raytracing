@@ -1,45 +1,49 @@
 #include "raybox.h"
-
 #include <cmath>
 #include <stdexcept>
 
-double* tracebox(box &box){
+double tracebox(box &b){
 
   const double pi = 3.14159265359;
 
-  double* xHit = new double[2];
-  double dX1 = box.x1-box.x; // x dist from upper right corner
-  double dY0 = box.y0-box.y; // y dist from lower left corner
-  double dY1 = box.y1-box.y; // y dist from upper right corner
+  // Save old values of x and y
+  double oldx = b.x, oldy = b.y;
+  
+  // Calc. various quantities
+  double dX1 = b.x1-b.x; // x dist from upper right corner
+  double dY0 = b.y0-b.y; // y dist from lower left corner
+  double dY1 = b.y1-b.y; // y dist from upper right corner
+  double rightHitPointY = tan(b.angle)*dX1+b.y;
 
-  if(box.x<box.x0||box.y<box.y0||box.x1<box.x||box.y1<box.y){
+  // Check bounds
+  if(b.x<b.x0||b.y<b.y0||b.x1<b.x||b.y1<b.y){
     throw std::domain_error("Ray is not inside box!");
   }
-
-  if(-pi/2>box.angle||pi/2<box.angle){
+  if(-pi/2>b.angle||pi/2<b.angle){
     throw std::domain_error("Angle is not in range!");
   }
-  
-  double rightHitPointY = tan(box.angle)*dX1+box.y;
+
   // will the ray hit the right wall within box??
-  if(box.y0<rightHitPointY&&rightHitPointY<box.y1){
-    box.ix++; // apparently yes, so lets increment the x index of the box
-    xHit[0] = box.x1; // x coord of hitpoint on right wall
-    xHit[1] = rightHitPointY; // y coord of hitpoint on right wall
+  if(b.y0<rightHitPointY&&rightHitPointY<b.y1){
+    b.ix++; // apparently yes, so lets increment the x index of the box
+    b.x = b.x1; // x coord of hitpoint on right wall
+    b.y = rightHitPointY; // y coord of hitpoint on right wall
   }
-  else{ // it did not hit right wall, so we either it hits upper or lower wall
-    if(box.angle>0){ // hit upper
-      box.iy++;
-      xHit[0] = tan(0.5*pi-box.angle)*dY1+box.x;
-      xHit[1] = box.y1;     
+  else{ // it did not hit right wall, so either it hits upper or lower wall
+
+    if(b.angle>0){ // hit upper
+      b.iy++;
+      b.x = tan(0.5*pi-b.angle)*dY1+b.x;
+      b.y = b.y1;     
     }
     else{ // hit lower
-      box.iy--;
-      xHit[0] = tan(0.5*pi-box.angle)*dY0+box.x;
-      xHit[1] = box.y0;
+      b.iy--;
+      b.x = tan(0.5*pi-b.angle)*dY0+b.x;
+      b.y = b.y0;
     }
   }
 
-  return xHit;
+  // return lenght of ray
+  return sqrt(pow(b.x-oldx,2)+pow(b.y-oldy,2));
 
 };
