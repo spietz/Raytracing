@@ -1,5 +1,3 @@
-
-
 CC= g++
 
 srcs = raytracer.cc raybox.cc mymatrix.cc DriverWeek6.cc

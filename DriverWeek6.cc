@@ -51,7 +51,7 @@ int main(){
   /* // create boost cpu timer object -> starts timing immidiately -> output results in destructor */
   /* boost::timer::auto_cpu_timer timer; */
 
-  double T = 0; // travel time
+  double T; // travel time
   ofstream outfile("raytime.txt");
   for(int n=0; n<Ys.size(); ++n)
     {
@@ -61,15 +61,15 @@ int main(){
 	mymatrix* L = raytracer(x0,y0,x1,y1,xs,Ys[n],xr,Yr[n],Nx,Ny);
 
 	// compute travel times
+	T = 0;
 	for(int i=0; i<Nx; ++i)
 	  {
 	    for(int j=0; j<Ny; ++j)
 	      {
-		cout << i << "," << j << endl;
-		T = T +  L->read(i,j)/V.read(i,j); 
+		T = T + L->read(i,j)/V.read(i,j);
 	      }
-	  }    
-	
+	  }
+
 	outfile << T << endl;
 
       }

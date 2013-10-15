@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include "raybox.h"
 #include "mymatrix.h"
+#include <iostream>
 
 mymatrix* raytracer(double x0,double y0,double x1,double y1,double xs,double ys,double xr,double yr,int Nx,int Ny)
 {
@@ -36,23 +37,23 @@ mymatrix* raytracer(double x0,double y0,double x1,double y1,double xs,double ys,
   if (iy_aim == Ny) --iy_aim; // ensure that boundary is covered by subdomain
   
   int ix_old = b.ix, iy_old = b.iy;
-  double l;
 
-  while( b.ix!=ix_aim | b.iy!=iy_aim){
-    ix_old = b.ix, iy_old = b.iy; 
-    // update subdomain corners
-    b.x0 = b.ix*dX+x0, b.x1 = b.x0+dX; // set x coords  
+  // While the x-index is still on the grid
+  while (b.ix < Nx){
+      
+    // Check that index is within bounds
+    if(b.ix < 0 && b.ix >= Nx && b.iy < 0 && b.iy >= Ny){
+      throw std::domain_error("Index is not within domain");
+    }
+      
+    // Get coordinates of current cell
+    b.x0 = b.ix*dX+x0, b.x1 = b.x0+dX; // set x coords
     b.y0 = b.iy*dY+y0, b.y1 = b.y0+dY; // set y coords
+      
+    // Trace box and store result
+    ix_old = b.ix, iy_old = b.iy;
     L->write(ix_old,iy_old,tracebox(b));
   }
-
-  // DO THE LAST SUBDOMAIN
-  ix_old = b.ix, iy_old = b.iy; 
-  // update subdomain corners
-  b.x0 = b.ix*dX+x0, b.x1 = b.x0+dX; // set x coords  
-  b.y0 = b.iy*dY+y0, b.y1 = b.y0+dY; // set y coords
-  L->write(ix_old,iy_old,tracebox(b));
-
 
   return L;
 
