@@ -9,3 +9,9 @@
 *** OUTPUT
     L: Nx,Ny-sized matrix with ray travel distances in each cell 
    
+** PLOTTING
+plot the data from the text files using GNUplot
+install: 
+gnuplot
+gnuplot-x11
+run raytime.gp script by "gnuplot raytime.gp"
